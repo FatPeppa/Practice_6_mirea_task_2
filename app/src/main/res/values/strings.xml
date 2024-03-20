@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Practice_6_mirea_task_2</string>
+
+    <string name="activity_main_text_view_text">Введите наименование товара</string>
+    <string name="activity_main_egit_text_hint">Наименование товара</string>
+    <string name="activity_main_button_text">Сохранить</string>
+    <string name="banner_service_text">Текст баннера</string>
+</resources>
