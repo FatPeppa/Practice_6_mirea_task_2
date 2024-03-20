@@ -5,4 +5,5 @@
     <string name="activity_main_egit_text_hint">Наименование товара</string>
     <string name="activity_main_button_text">Сохранить</string>
     <string name="banner_service_text">Текст баннера</string>
+    <string name="banner_service_button_text">Stop</string>
 </resources>

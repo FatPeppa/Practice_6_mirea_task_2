@@ -72,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions();
         }
 
+        while (!Settings.canDrawOverlays(this)) {
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         Intent serviceIntent = new Intent(this, BannerService.class);
         serviceIntent.putExtra("value", "");
         startService(serviceIntent);
@@ -100,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         stopService(new Intent(this, BannerService.class));
     }
 

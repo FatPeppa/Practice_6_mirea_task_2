@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -21,6 +22,7 @@ public class BannerService extends Service {
     WindowManager windowManager;
     View rootView;
     TextView textView;
+    Button button;
 
     public BannerService() {}
 
@@ -31,6 +33,15 @@ public class BannerService extends Service {
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         rootView = (ConstraintLayout) LayoutInflater.from(this).inflate(R.layout.banner_service, null);
         textView = rootView.findViewById(R.id.banner_text_view);
+        button = rootView.findViewById(R.id.banner_button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                windowManager.removeView(rootView);
+                stopSelf();
+            }
+        });
     }
 
     @Override
@@ -56,12 +67,12 @@ public class BannerService extends Service {
         }
 
         Intent bannerIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, bannerIntent, PendingIntent.FLAG_IMMUTABLE);
+        //PendingIntent contentIntent = PendingIntent.getActivity(this, 0, bannerIntent, PendingIntent.FLAG_IMMUTABLE);
 
-        rootView.setOnClickListener(new View.OnClickListener() {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onRootViewClick();
+                onTextViewClick();
             }
         });
 
@@ -72,7 +83,12 @@ public class BannerService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public void onRootViewClick() {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    public void onTextViewClick() {
         Intent dialogIntent = new Intent(this, MainActivity.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(dialogIntent);
