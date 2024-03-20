@@ -17,7 +17,6 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class BannerService extends Service {
-
     String inputIntentStr = null;
     WindowManager windowManager;
     View rootView;
@@ -38,7 +37,6 @@ public class BannerService extends Service {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                windowManager.removeView(rootView);
                 stopSelf();
             }
         });
@@ -66,9 +64,6 @@ public class BannerService extends Service {
             textView.setText(text);
         }
 
-        Intent bannerIntent = new Intent(this, MainActivity.class);
-        //PendingIntent contentIntent = PendingIntent.getActivity(this, 0, bannerIntent, PendingIntent.FLAG_IMMUTABLE);
-
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,12 +81,14 @@ public class BannerService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        windowManager.removeView(rootView);
     }
 
     public void onTextViewClick() {
         Intent dialogIntent = new Intent(this, MainActivity.class);
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(dialogIntent);
+        stopSelf();
     }
 
     @Override

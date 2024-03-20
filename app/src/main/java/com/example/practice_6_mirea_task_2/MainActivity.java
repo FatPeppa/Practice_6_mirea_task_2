@@ -25,11 +25,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private final Context thisContext = this;
-    final int PERMISSION_REQUEST_CODE = 39;
 
     Button main_activity_button;
     EditText main_activity_edit_text;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +59,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*try {
-            requestPermissions();
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }*/
-
         if (!Settings.canDrawOverlays(this)) {
             requestPermissions();
         }
@@ -94,13 +85,8 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_REQUEST_CODE &&
-                grantResults.length == 1) {
-            if (
-                    grantResults[0] != PackageManager.PERMISSION_GRANTED
-            ) {
-                Toast.makeText(this, "No permission", Toast.LENGTH_SHORT).show();
-            }
+        if (!Settings.canDrawOverlays(this)) {
+            Toast.makeText(this, "No permission", Toast.LENGTH_SHORT).show();
         }
         super.onRequestPermissionsResult(
                 requestCode, permissions, grantResults
